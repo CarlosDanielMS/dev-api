@@ -30,7 +30,7 @@ Antes de começar, certifique-se de ter instalado:
 
 #### 1️⃣ Clone o Repositório
 ```bash
-git clone https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
+git clone https://github.com/CarlosDanielMS/dev-api.git
 cd SEU_REPOSITORIO
 2️⃣ Configure o Arquivo .env
 Crie um arquivo .env na raiz do projeto com o seguinte conteúdo:
