@@ -1,5 +1,5 @@
 API de Produtos e Pedidos
-Esta é uma API RESTful para gerenciamento de produtos e pedidos, construída com Node.js, Express, e Prisma ORM, utilizando PostgreSQL como banco de dados. O ambiente de desenvolvimento e produção é containerizado com Docker.
+Esta é uma API RESTful para gerenciamento de produtos e pedidos, construída com Node.js, Express e Prisma ORM. O ambiente é totalmente containerizado usando Docker e Docker Compose para facilitar a configuração e a execução.
 
 🛠️ Tecnologias Utilizadas
 Backend: Node.js, Express.js
@@ -20,7 +20,7 @@ Docker
 
 Docker Compose (geralmente já vem com o Docker Desktop)
 
-Um cliente de API como Postman, Insomnia ou cURL.
+Um cliente de API como Postman, Insomnia ou cURL
 
 Passo a Passo da Instalação
 1. Clone o Repositório
@@ -31,9 +31,9 @@ Bash
 
 git clone https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
 cd SEU_REPOSITORIO
-2. Crie o Arquivo de Variáveis de Ambiente
+2. Crie o Arquivo de Variáveis de Ambiente (.env)
 
-O projeto precisa de um arquivo .env para configurar a conexão com o banco de dados e outras variáveis. Crie um arquivo chamado .env na raiz do projeto e copie o conteúdo abaixo para ele.
+O projeto precisa de um arquivo .env para configurar a conexão com o banco de dados. Crie um arquivo chamado .env na raiz do projeto e copie o conteúdo abaixo para ele.
 
 Fragmento do código
 
@@ -63,7 +63,7 @@ docker-compose up --build -d
 
 4. Execute as Migrações do Banco de Dados
 
-Após os containers estarem no ar, você precisa criar as tabelas no banco de dados. Execute o seguinte comando para que o Prisma aplique as migrações:
+Após os containers estarem no ar, você precisa criar as tabelas no banco de dados. Execute o seguinte comando para que o Prisma aplique as migrações.
 
 Bash
 
@@ -76,9 +76,7 @@ Pronto! Sua API está rodando e acessível em http://localhost:3000.
 Aqui estão alguns exemplos de como usar os endpoints da API.
 
 Produtos (/api/produtos)
-Criar um novo produto
-Método: POST
-
+Criar um novo produto (POST /)
 URL: http://localhost:3000/api/produtos
 
 Body (JSON):
@@ -91,15 +89,28 @@ JSON
   "preco": 8999.90,
   "estoque": 10
 }
-Listar todos os produtos
-Método: GET
-
+Listar todos os produtos (GET /)
 URL: http://localhost:3000/api/produtos
 
-Pedidos (/api/pedidos)
-Criar um novo pedido
-Método: POST
+Obter um produto por ID (GET /:id)
+URL: http://localhost:3000/api/produtos/1
 
+Atualizar um produto (PUT /:id)
+URL: http://localhost:3000/api/produtos/1
+
+Body (JSON):
+
+JSON
+
+{
+  "preco": 8500.00,
+  "estoque": 8
+}
+Deletar um produto (DELETE /:id)
+URL: http://localhost:3000/api/produtos/1
+
+Pedidos (/api/pedidos)
+Criar um novo pedido (POST /)
 URL: http://localhost:3000/api/pedidos
 
 Body (JSON): (Assumindo que um produto com id: 1 já existe)
@@ -112,17 +123,14 @@ JSON
     { "produtoId": 1, "quantidade": 2 }
   ]
 }
-Listar todos os pedidos
-Método: GET
-
+Listar todos os pedidos (GET /)
 URL: http://localhost:3000/api/pedidos
 
 📜 Scripts Disponíveis
-Dentro do container api, você pode executar os seguintes scripts:
+Dentro do container api, você pode executar os seguintes scripts definidos no package.json:
 
 npm run dev: Inicia o servidor em modo de desenvolvimento com nodemon.
 
 npm run start: Inicia o servidor em modo de produção.
 
-npm run prisma:migrate: Executa as migrações do banco de dados.
-
+npm run prisma:migrate: Executa as migrações do banco de dados com o Prisma.
