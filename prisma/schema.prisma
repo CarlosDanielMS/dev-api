@@ -1,0 +1,41 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Produto {
+  id          Int      @id @default(autoincrement())
+  nome        String   @unique
+  descricao   String?
+  preco       Float
+  estoque     Int      @default(0)
+  pedidos     ProdutosEmPedidos[] // Relação com a tabela de junção
+  criadoEm    DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+}
+
+model Pedido {
+  id            Int      @id @default(autoincrement())
+  nomeCliente   String
+  total         Float
+  produtos      ProdutosEmPedidos[] // Relação com a tabela de junção
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+}
+
+// Tabela de junção para a relação N-N entre Pedido e Produto
+model ProdutosEmPedidos {
+  pedido      Pedido   @relation(fields: [pedidoId], references: [id])
+  pedidoId    Int
+  produto     Produto  @relation(fields: [produtoId], references: [id])
+  produtoId   Int
+  quantidade  Int
+
+  @@id([pedidoId, produtoId]) // Chave primária composta
+}
